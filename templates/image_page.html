@@ -1,24 +1,41 @@
-<!-- image_page.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Image Page</title>
-</head>
-<body>
-    <h1>Image Page</h1>
+{% extends 'header.html' %}
 
-    <!-- Display the line graph for average price of cars by year -->
-    <h2>Line Graph: Average Price of Cars by Year</h2>
-    <img src="{{ graph1 }}" alt="Line Graph">
+{% block page_title %}
+Image Page
+{% endblock %}
 
-    <!-- Display the bar graph for number of cars by year -->
-    <h2>Bar Graph: Number of Cars by Year</h2>
-    <img src="{{ graph2 }}" alt="Bar Graph">
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Our Statistics</h1>
 
-    <!-- Display the bar graph for number of cars by year -->
-    <h2>Bar Graph: Number of Cars by Year</h2>
-    <img src="{{ graph3 }}" alt="Bar Graph">
+        <!-- Display the line graph for average price of cars by year -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Line Graph: Average Price of Cars by Year</h2>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ graph1 }}" alt="Line Graph" class="img-fluid">
+            </div>
+        </div>
 
-</body>
-</html>
+        <!-- Display the bar graph for number of cars by year -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h2 class="mb-0">Bar Graph: Number of Cars by Year</h2>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ graph2 }}" alt="Bar Graph" class="img-fluid">
+            </div>
+        </div>
+
+        <!-- Display the bar graph for number of cars by year -->
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h2 class="mb-0">Bar Graph: Number of Cars by Year</h2>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ graph3 }}" alt="Bar Graph" class="img-fluid">
+            </div>
+        </div>
+    </div>
+{% endblock %}
