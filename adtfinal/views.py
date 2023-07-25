@@ -156,7 +156,7 @@ def generate_graph1():
     plt.plot(df_yr['year'], df_yr['AVG(Price.price)'])
     plt.xlabel('Age of Car (Year Built)')
     plt.ylabel('Average Price')
-    plt.title('Average Price by Age of Car')
+    
 
     # Save the plot to a BytesIO buffer
     buffer = BytesIO()
@@ -197,7 +197,7 @@ def generate_graph2():
     plt.bar(df_man['manufacturer'], df_man['AVG(Price.price)'])
     plt.xlabel('Manufacturer')
     plt.ylabel('Average Price')
-    plt.title('Top 10 manufacturers with the highest average prices for cars built in 2022')
+    
 
     # Save the plot to a BytesIO buffer
     buffer = BytesIO()
@@ -235,7 +235,7 @@ def generate_graph3():
     plt.xlabel('Manufacturer')
     plt.xticks(rotation=90)
     plt.ylabel('Average Mileage')
-    plt.title('Average Mileage by Manufacturer')
+    
 
     # Save the plot to a BytesIO buffer
     buffer = BytesIO()
