@@ -24,7 +24,7 @@ urlpatterns = [
     path('car_list', views.car_list, name='car_list'),
     path('car_detail/<int:car_id>/', views.car_detail_by_id, name='car_detail'),
     path('car_confirm_delete/<int:car_id>/', views.car_confirm_delete, name='car_confirm_delete'),
-    # path('about/', views.about, name='about')
+    path('about/', views.about_view, name='about'),
     # ... other URL patterns ...
 ]
 

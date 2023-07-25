@@ -4,6 +4,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 def index(request):
     return render(request, "home.html")
 
+def about_view(request):
+    # Add any logic or data retrieval you need for the about page here
+    return render(request, 'about.html')
 
 def car_list(request):
     conn = sqlite3.connect('Full_Car_Database.db')
@@ -111,9 +114,9 @@ def car_detail_by_id(request, car_id):
             "mpg": car_attributes_data[6],
             "exterior_color": car_attributes_data[7],
             "interior_color": car_attributes_data[8],
-            "accidents_or_damage": car_history_data[1],
-            "one_owner": car_history_data[2],
-            "personal_use_only": car_history_data[3],
+            "accidents_or_damage" : bool(int.from_bytes(car_history_data[1], byteorder='big')),
+            "one_owner" : bool(int.from_bytes(car_history_data[2], byteorder='big')),
+            "personal_use_only" : bool(int.from_bytes(car_history_data[3], byteorder='big')),
             "seller_name": dealer_data[1],
             "seller_rating": dealer_data[2],
             "driver_rating": dealer_data[3],

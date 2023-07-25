@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Used Car List</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+{% extends 'header.html' %}
+
+{% block page_title %}
+Car List
+{% endblock %}
+
+{% block content %}
     <div class="container mt-5">
         <h1 class="mb-4">Used Car List</h1>
         <form method="GET">
@@ -50,5 +49,4 @@
             </tbody>
         </table>
     </div>
-</body>
-</html>
+{% endblock %}

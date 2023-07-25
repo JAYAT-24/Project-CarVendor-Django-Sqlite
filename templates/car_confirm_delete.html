@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Car Delete</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+{% extends 'header.html' %}
+
+{% block page_title %}
+Car Delete
+{% endblock %}
+
+{% block content %}
     <div class="container mt-5">
         <h1 class="mb-4">Car Delete</h1>
         <form method="post" class="delete-form">
@@ -15,5 +14,4 @@
             <a href="{% url 'car_list' %}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
-</body>
-</html>
+{% endblock %}

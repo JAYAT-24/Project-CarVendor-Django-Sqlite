@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Car Detail</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
+{% extends "header.html" %}
+
+{% block page_title %}
+Car Detail - {{ object.manufacturer }} {{ object.model }}
+{% endblock %}
+
+{% block content %}
         <div class="card">
             <div class="card-header bg-primary text-white">
                 <h1 class="mb-0">Car Detail</h1>
@@ -112,5 +110,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

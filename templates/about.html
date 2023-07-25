@@ -1,50 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About CarVendor</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <!-- Navbar (you can reuse the same navbar as in home.html) -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">CarVendor</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="home.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+{% extends "header.html" %}
 
-    <!-- About section -->
-    <div class="about-section">
-        <div class="container">
-            <h2>About CarVendor</h2>
-            <p>CarVendor is a leading platform for buying and selling used cars. We strive to provide a seamless and transparent experience for both buyers and sellers in the used car market.</p>
-            <!-- Add more content here as needed -->
-        </div>
+{% block page_title %}
+About CarVendor
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h1 class="mb-0">About CarVendor</h1>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2023 CarVendor. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap and other scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+    <div class="card-body">
+        <p>Welcome to CarVendor, your one-stop destination for buying and selling used cars.</p>
+        <p>At CarVendor, we strive to provide a seamless and hassle-free experience for both buyers and sellers. Our platform offers a wide selection of high-quality used cars from reputable sellers across the country.</p>
+        <p>For buyers, we ensure that all cars listed on our website undergo thorough inspections and come with detailed history reports, so you can make an informed decision before purchasing.</p>
+        <p>For sellers, our platform provides a user-friendly interface to list your cars and reach a large audience of potential buyers.</p>
+        <p>Whether you're looking to buy a reliable used car or sell your current vehicle, CarVendor has got you covered.</p>
+    </div>
+</div>
+{% endblock %}
