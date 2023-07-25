@@ -1,5 +1,11 @@
 import sqlite3
 from django.shortcuts import render, get_object_or_404, redirect
+import pandas as pd
+import matplotlib
+matplotlib.use("Agg")  # Set the Agg backend
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
 
 def index(request):
     return render(request, "home.html")
@@ -125,3 +131,127 @@ def car_detail_by_id(request, car_id):
 
     return render(request, "car_detail.html", context)
 
+def generate_graph1():
+    conn = sqlite3.connect('Full_Car_Database.db')
+    cursor = conn.execute('''
+        SELECT Car.year, COUNT(Car.year), AVG(Price.price)
+        FROM Car
+        INNER JOIN Price 
+        ON Car.car_id = Price.car_id
+        WHERE Car.year >= 2000
+        GROUP BY Car.year;
+        ''')
+
+    colnames = cursor.description #column names
+    colnames_list = []
+    for row in colnames:
+        colnames_list.append(row[0])
+    df_yr = pd.DataFrame(cursor.fetchall(), columns=colnames_list)
+
+    #Plot the results
+    import matplotlib.pyplot as plt
+    plt.plot(df_yr['year'], df_yr['AVG(Price.price)'])
+    plt.xlabel('Age of Car (Year Built)')
+    plt.ylabel('Average Price')
+    plt.title('Average Price by Age of Car')
+
+    # Save the plot to a BytesIO buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+
+    # Encode the image as base64 and convert it to a data URI
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    image_data_uri = f"data:image/png;base64,{image_base64}"
+
+    conn.close()
+
+    return image_data_uri
+
+
+def generate_graph2():
+    conn = sqlite3.connect('Full_Car_Database.db')
+    cursor = conn.execute('''
+        SELECT Car.manufacturer, COUNT(Car.manufacturer), AVG(Price.price)
+        FROM Car
+        INNER JOIN Price 
+        ON Car.car_id = Price.car_id
+        WHERE Car.year == 2022
+        GROUP BY Car.manufacturer
+        ORDER BY AVG(Price.price) DESC
+        LIMIT 10;
+        ''')
+
+    colnames = cursor.description #column names
+    colnames_list = []
+    for row in colnames:
+        colnames_list.append(row[0])
+
+    df_man = pd.DataFrame(cursor.fetchall(), columns=colnames_list)
+
+    plt.figure(figsize=(10,5))
+    plt.bar(df_man['manufacturer'], df_man['AVG(Price.price)'])
+    plt.xlabel('Manufacturer')
+    plt.ylabel('Average Price')
+    plt.title('Top 10 manufacturers with the highest average prices for cars built in 2022')
+
+    # Save the plot to a BytesIO buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+
+    # Encode the image as base64 and convert it to a data URI
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    image_data_uri = f"data:image/png;base64,{image_base64}"
+
+    conn.close()
+
+    return image_data_uri
+
+def generate_graph3():
+    conn = sqlite3.connect('Full_Car_Database.db')
+    cursor = conn.execute('''
+        SELECT Car.manufacturer, AVG(CarAttributes.mileage)
+        FROM Car
+        INNER JOIN CarAttributes
+        ON Car.car_id = CarAttributes.car_id
+        GROUP BY Car.manufacturer;
+        ''')
+
+    colnames = cursor.description #column names
+    colnames_list = []
+    for row in colnames:
+        colnames_list.append(row[0])
+
+    df_man = pd.DataFrame(cursor.fetchall(), columns=colnames_list)
+
+    plt.figure(figsize=(10,5))
+    plt.bar(df_man['manufacturer'], df_man['AVG(CarAttributes.mileage)'])
+    plt.xlabel('Manufacturer')
+    plt.xticks(rotation=90)
+    plt.ylabel('Average Mileage')
+    plt.title('Average Mileage by Manufacturer')
+
+    # Save the plot to a BytesIO buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+
+    # Encode the image as base64 and convert it to a data URI
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    image_data_uri = f"data:image/png;base64,{image_base64}"
+
+    conn.close()
+
+    return image_data_uri
+
+def image_page(request):
+    graph1 = generate_graph1()
+    graph2 = generate_graph2()
+    graph3 = generate_graph3()
+
+    context = {"graph1": graph1, "graph2": graph2, "graph3": graph3}
+    return render(request, "image_page.html", context)
