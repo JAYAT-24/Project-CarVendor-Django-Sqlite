@@ -37,14 +37,14 @@
                     <td>{{ car.2 }}</td>
                     <td>{{ car.3 }}</td>
                     <td>
-                        <a href="car_detail" class="btn btn-info">Detail</a>
+                        <a href="{% url 'car_detail' car.0 %}" class="btn btn-info">Detail</a>
                         <a href="car_delete" class="btn btn-danger">Delete</a>
                         <a href="car_delete" class="btn btn-warning">Edit</a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4"><b>Data is empty! Please, add data first.</b></td>
+                    <td colspan="4"><b> Please, add select a filter.</b></td>
                 </tr>
                 {% endfor %}
             </tbody>
