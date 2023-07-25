@@ -18,19 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
-# urlpatterns = [
-#     path('', views.index, name="index"),
-#     path('car_detail', views.car_detail, name="Car Detail"),
-#     path("car_delete", views.car_delete, name="Car Delete"),
-#     path('car_detail/', views.default_car_detail, name='default_car_detail'),  # Add a default car_detail view
-# ]
 
 urlpatterns = [
     path('', views.index, name='index'),  # The root URL will lead to the home page
     path('car_list', views.car_list, name='car_list'),
-    # path('car_detail/', views.default_car_detail, name='default_car_detail'),  # Add a default car_detail view
-    path('car_detail/<int:car_id>/', views.car_detail_by_id, name='car_detail'),  # Updated the URL pattern for car detail with car_id parameter
-    path('car_delete/', views.car_delete, name='car_delete'),  # Ensure consistency with trailing slash
+    path('car_detail/<int:car_id>/', views.car_detail_by_id, name='car_detail'),
+    path('car_confirm_delete/<int:car_id>/', views.car_confirm_delete, name='car_confirm_delete'),
     # path('about/', views.about, name='about')
     # ... other URL patterns ...
 ]

@@ -38,8 +38,8 @@
                     <td>{{ car.3 }}</td>
                     <td>
                         <a href="{% url 'car_detail' car.0 %}" class="btn btn-info">Detail</a>
-                        <a href="car_delete" class="btn btn-danger">Delete</a>
-                        <a href="car_delete" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'car_confirm_delete' car.0 %}" class="btn btn-danger">Delete</a>
+                        <a href="car_edit" class="btn btn-warning">Edit</a>
                     </td>
                 </tr>
                 {% empty %}
