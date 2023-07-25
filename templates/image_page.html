@@ -8,33 +8,37 @@ Image Page
     <div class="container mt-5">
         <h1 class="mb-4 text-center">Image Page</h1>
 
-        <!-- Display the line graph for average price of cars by year -->
-        <div class="card mb-4 shadow-lg">
-            <div class="card-header bg-primary text-white text-center">
-                <h2 class="mb-0">Line Graph: Average Price of Cars by Year</h2>
+
+        <!-- Display the line graph -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Average Price by Age of Car</h2>
             </div>
             <div class="card-body text-center">
-                <img src="{{ graph1 }}" alt="Line Graph" class="img-fluid rounded">
+                <img src="{{ graph1 }}" alt="Line Graph" class="img-fluid">
+                <p>Results: This line plot displays the average car price by year the car was built. There is a spike in 2019 in car value. In addition, there was a steady increase in car value from 2010 to 2023. </p>
             </div>
         </div>
 
-        <!-- Display the bar graph for number of cars by year -->
-        <div class="card mb-4 shadow-lg">
-            <div class="card-header bg-success text-white text-center">
-                <h2 class="mb-0">Bar Graph: Number of Cars by Year</h2>
+        <!-- Display the bar graph -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h2 class="mb-0">Top 10 Manufacturers with the Highest Average Price for Cars Built in 2022</h2>
             </div>
             <div class="card-body text-center">
-                <img src="{{ graph2 }}" alt="Bar Graph" class="img-fluid rounded">
+                <img src="{{ graph2 }}" alt="Bar Graph" class="img-fluid">
+                <p>Results: This bar graph displays the average car price by manufacturer. The 10 manufacturers with the highest priced vehicles are Porsche, Land Rover, Jaguar, BMW, Lincoln, RAM, GMC, Infinity, Mercedes-Benz, and Jeep. The highest price manufacturer was Porche with average prices over $130,000. The second most expensive manufacturer was Land Rover with average car prices around $80,000. </p>
             </div>
         </div>
 
-        <!-- Display the bar graph for number of cars by year -->
-        <div class="card shadow-lg">
-            <div class="card-header bg-info text-white text-center">
-                <h2 class="mb-0">Bar Graph: Number of Cars by Year</h2>
+        <!-- Display the second bar graph -->
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h2 class="mb-0">Average Mileage by Manufacturer</h2>
             </div>
             <div class="card-body text-center">
-                <img src="{{ graph3 }}" alt="Bar Graph" class="img-fluid rounded">
+                <img src="{{ graph3 }}" alt="Bar Graph" class="img-fluid">
+                <p>Results: This bar graph displays the average mileage by each manufacturer. Chrysler had cars with the highest average mileages with an average mileage of over 70,000 miles. Toyota cars had the second highest mileage with over 60,0000 miles. </p>
             </div>
         </div>
     </div>
