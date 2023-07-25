@@ -1,64 +1,162 @@
 <!DOCTYPE html>
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Home</title>-->
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
-<!--    <link rel="stylesheet" href="styles.css">-->
-
-<!--</head>-->
-<!--<body>-->
-<!--    <div class="container mt-5 text-center">-->
-<!--        <h1>Welcome to Used Car Website</h1>-->
-<!--        <p class="lead">View our collection of used cars:</p>-->
-<!--        <a href="{% url 'car_list' %}" class="btn btn-primary btn-lg">View Cars</a>-->
-<!--    </div>-->
-<!--</body>-->
-<!--</html>-->
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
 
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-brand:hover {
+            color: #ffc107;
+        }
+
+        .nav-link {
+            color: #fff;
+        }
+
+        .nav-link:hover {
+            color: #ffc107;
+        }
+
+        .jumbotron {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .jumbotron h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .jumbotron p {
+            font-size: 20px;
+        }
+
+        .btn-primary {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            font-size: 20px;
+            padding: 12px 30px;
+        }
+
+        .btn-primary:hover {
+            background-color: #e0a800;
+            border-color: #e0a800;
+        }
+
+        .about-section {
+            background-color: #fff;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .about-section h2 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .why-choose-section {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .why-choose-section h2 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer p {
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">CarVendor</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">CarVendor</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
     <!-- Main content -->
-    <div class="container mt-5 text-center">
-        <h1>Welcome to CarVendor - Your Used Car Marketplace</h1>
-        <p class="lead">View our collection of used cars:</p>
-        <a href="{% url 'car_list' %}" class="btn btn-primary btn-lg">View Cars</a>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Welcome to CarVendor - Your Used Car Marketplace</h1>
+            <p class="lead">View our collection of used cars:</p>
+            <a href="{% url 'car_list' %}" class="btn btn-primary btn-lg">View Cars</a>
+        </div>
     </div>
 
     <!-- About section -->
-    <div class="container mt-5" id="about">
-        <h2>About CarVendor</h2>
-        <p>CarVendor is a leading platform for buying and selling used cars. We strive to provide a seamless and transparent experience for both buyers and sellers in the used car market.</p>
-        <!-- Add more content here as needed -->
+    <div class="about-section">
+        <div class="container">
+            <h2>About CarVendor</h2>
+            <p>CarVendor is a leading platform for buying and selling used cars. We strive to provide a seamless and transparent experience for both buyers and sellers in the used car market.</p>
+            <!-- Add more content here as needed -->
+        </div>
     </div>
 
-    <!-- Add any additional sections or content as needed -->
+    <!-- Why Choose CarVendor section -->
+    <div class="why-choose-section">
+        <div class="container">
+            <h2>Why Choose CarVendor?</h2>
+            <p>At CarVendor, we take pride in offering:</p>
+            <ul>
+                <li>Wide range of high-quality used cars</li>
+                <li>Easy search and filter options</li>
+                <li>Transparent pricing and vehicle history</li>
+                <li>Secure and reliable transactions</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 CarVendor. All rights reserved.</p>
+        </div>
+    </footer>
 
     <!-- Bootstrap and other scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -66,6 +164,3 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-
-

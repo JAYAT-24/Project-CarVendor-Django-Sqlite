@@ -31,6 +31,7 @@ urlpatterns = [
     path('car_detail/', views.default_car_detail, name='default_car_detail'),  # Add a default car_detail view
     path('car_detail/<int:car_id>/', views.car_detail_by_id, name='car_detail'),  # Updated the URL pattern for car detail with car_id parameter
     path('car_delete/', views.car_delete, name='car_delete'),  # Ensure consistency with trailing slash
+    # path('about/', views.about, name='about')
     # ... other URL patterns ...
 ]
 
