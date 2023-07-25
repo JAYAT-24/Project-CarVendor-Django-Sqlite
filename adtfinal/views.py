@@ -16,18 +16,34 @@ def about_view(request):
 
 def car_list(request):
     conn = sqlite3.connect('Full_Car_Database.db')
-    cursor = conn.execute('SELECT * FROM Car ORDER BY RANDOM() LIMIT 100')
+    cursor = conn.execute('SELECT * FROM Car ORDER BY RANDOM() LIMIT 1000')
     car_data = [row for row in cursor]
 
-    # Get the manufacturers list
-    manufacturers = list(set(row[1] for row in car_data))
+    # Get the manufacturers and models lists
+    manufacturers = sorted(list(set(row[1] for row in car_data)))
+    selected_manufacturer = request.GET.get('manufacturer', '')
 
-    selected_manufacturer = request.GET.get('manufacturer', '')  # Get the selected manufacturer from GET parameters
+    if selected_manufacturer:
+        models = sorted(list(set(row[2] for row in car_data if row[1] == selected_manufacturer)))
+    else:
+        models = []
 
-    # If a manufacturer is selected, filter the data
+    # Get the selected filters from GET parameters
+    selected_year = request.GET.get('year', '')
+    selected_model = request.GET.get('model', '')
+
+    # If manufacturer is selected, filter data
     filtered_data = car_data
     if selected_manufacturer:
         filtered_data = [row for row in car_data if row[1] == selected_manufacturer]
+
+    # If year is selected, filter data
+    if selected_year:
+        filtered_data = [row for row in filtered_data if str(row[3]) == selected_year]
+
+    # If model is selected, filter data
+    if selected_model:
+        filtered_data = [row for row in filtered_data if row[2] == selected_model]
 
     conn.close()
 
@@ -35,6 +51,9 @@ def car_list(request):
         "car_data": filtered_data,
         "manufacturers": manufacturers,
         "selected_manufacturer": selected_manufacturer,
+        "models": models,
+        "selected_year": selected_year,
+        "selected_model": selected_model,
     }
     return render(request, "car_list.html", context)
 

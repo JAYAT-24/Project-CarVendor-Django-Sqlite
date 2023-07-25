@@ -6,36 +6,62 @@ Image Page
 
 {% block content %}
     <div class="container mt-5">
-        <h1 class="mb-4">Our Statistics</h1>
+        <h1 class="mb-4 text-center">Image Page</h1>
 
         <!-- Display the line graph for average price of cars by year -->
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
+        <div class="card mb-4 shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
                 <h2 class="mb-0">Line Graph: Average Price of Cars by Year</h2>
             </div>
             <div class="card-body text-center">
-                <img src="{{ graph1 }}" alt="Line Graph" class="img-fluid">
+                <img src="{{ graph1 }}" alt="Line Graph" class="img-fluid rounded">
             </div>
         </div>
 
         <!-- Display the bar graph for number of cars by year -->
-        <div class="card mb-4">
-            <div class="card-header bg-success text-white">
+        <div class="card mb-4 shadow-lg">
+            <div class="card-header bg-success text-white text-center">
                 <h2 class="mb-0">Bar Graph: Number of Cars by Year</h2>
             </div>
             <div class="card-body text-center">
-                <img src="{{ graph2 }}" alt="Bar Graph" class="img-fluid">
+                <img src="{{ graph2 }}" alt="Bar Graph" class="img-fluid rounded">
             </div>
         </div>
 
         <!-- Display the bar graph for number of cars by year -->
-        <div class="card">
-            <div class="card-header bg-info text-white">
+        <div class="card shadow-lg">
+            <div class="card-header bg-info text-white text-center">
                 <h2 class="mb-0">Bar Graph: Number of Cars by Year</h2>
             </div>
             <div class="card-body text-center">
-                <img src="{{ graph3 }}" alt="Bar Graph" class="img-fluid">
+                <img src="{{ graph3 }}" alt="Bar Graph" class="img-fluid rounded">
             </div>
         </div>
     </div>
 {% endblock %}
+
+<style>
+    /* Custom CSS for image_page.html */
+    .card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        font-weight: bold;
+        font-size: 1.5rem;
+        padding: 20px;
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Add more custom styles as needed */
+</style>
