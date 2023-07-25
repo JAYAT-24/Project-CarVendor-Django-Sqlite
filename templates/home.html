@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Home</title>-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="styles.css">-->
+
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container mt-5 text-center">-->
+<!--        <h1>Welcome to Used Car Website</h1>-->
+<!--        <p class="lead">View our collection of used cars:</p>-->
+<!--        <a href="{% url 'car_list' %}" class="btn btn-primary btn-lg">View Cars</a>-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">CarVendor</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mt-5 text-center">
+        <h1>Welcome to CarVendor - Your Used Car Marketplace</h1>
+        <p class="lead">View our collection of used cars:</p>
+        <a href="{% url 'car_list' %}" class="btn btn-primary btn-lg">View Cars</a>
+    </div>
+
+    <!-- About section -->
+    <div class="container mt-5" id="about">
+        <h2>About CarVendor</h2>
+        <p>CarVendor is a leading platform for buying and selling used cars. We strive to provide a seamless and transparent experience for both buyers and sellers in the used car market.</p>
+        <!-- Add more content here as needed -->
+    </div>
+
+    <!-- Add any additional sections or content as needed -->
+
+    <!-- Bootstrap and other scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+

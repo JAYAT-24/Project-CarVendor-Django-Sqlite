@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="mb-0">Car Detail</h1>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">Manufacturer: {{ object.manufacturer }}</h3>
+                <h3 class="card-title">Model: {{ object.model }}</h3>
+                <h3 class="card-title">Year: {{ object.year }}</h3>
+                <h3 class="card-title">Mileage: {{ object.mileage }}</h3>
+                <h3 class="card-title">Engine: {{ object.engine }}</h3>
+                <h3 class="card-title">Transmission: {{ object.transmission }}</h3>
+                <h3 class="card-title">Drivetrain: {{ object.drivetrain }}</h3>
+                <h3 class="card-title">Fuel Type: {{ object.fuel_type }}</h3>
+                <h3 class="card-title">MPG: {{ object.mpg }}</h3>
+                <h3 class="card-title">Exterior Color: {{ object.exterior_color }}</h3>
+                <h3 class="card-title">Interior Color: {{ object.interior_color }}</h3>
+                <h3 class="card-title">Accidents or Damage: {{ object.accidents_or_damage }}</h3>
+                <h3 class="card-title">One Owner: {{ object.one_owner }}</h3>
+                <h3 class="card-title">Personal Use Only: {{ object.personal_use_only }}</h3>
+                <h3 class="card-title">Seller Name: {{ object.seller_name }}</h3>
+                <h3 class="card-title">Seller Rating: {{ object.seller_rating }}</h3>
+                <h3 class="card-title">Driver Rating: {{ object.driver_rating }}</h3>
+                <h3 class="card-title">Driver Reviews Number: {{ object.driver_reviews_num }}</h3>
+                <h3 class="card-title">Price Drop: {{ object.price_drop }}</h3>
+                <h3 class="card-title">Price: {{ object.price }}</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
