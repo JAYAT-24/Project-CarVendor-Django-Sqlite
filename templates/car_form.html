@@ -1,39 +1,146 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Car Form</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Car Form</h1>
+{% extends "header.html" %}
+
+{% block page_title %}
+Car Update - {{ car.manufacturer }} {{ car.model }}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h1 class="mb-0">Update Car Details</h1>
+    </div>
+    <div class="card-body">
+        <div class="mt-3 mb-3">
+            <a href="{% url 'car_list' %}" class="btn btn-secondary">Back to Car List</a>
+        </div>
         <form method="POST">
             {% csrf_token %}
             <div class="form-group row">
                 <label for="manufacturer" class="col-sm-2 col-form-label">Manufacturer</label>
                 <div class="col-sm-10">
-                    {{ form.manufacturer }}
+                    <input type="text" class="form-control" name="manufacturer" value="{{ car.manufacturer }}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="model" class="col-sm-2 col-form-label">Model</label>
                 <div class="col-sm-10">
-                    {{ form.model }}
+                    <input type="text" class="form-control" name="model" value="{{ car.model }}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="year" class="col-sm-2 col-form-label">Year</label>
                 <div class="col-sm-10">
-                    {{ form.year }}
+                    <input type="number" class="form-control" name="year" value="{{ car.year }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="mileage" class="col-sm-2 col-form-label">Mileage</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="mileage" value="{{ carattributes.mileage }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="engine" class="col-sm-2 col-form-label">Engine</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="engine" value="{{ carattributes.engine }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="transmission" class="col-sm-2 col-form-label">Transmission</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="transmission" value="{{ carattributes.transmission }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="drivetrain" class="col-sm-2 col-form-label">Drivetrain</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="drivetrain" value="{{ carattributes.drivetrain }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fuel_type" class="col-sm-2 col-form-label">Fuel Type</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="fuel_type" value="{{ carattributes.fuel_type }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="mpg" class="col-sm-2 col-form-label">MPG</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="mpg" value="{{ carattributes.mpg }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="exterior_color" class="col-sm-2 col-form-label">Exterior Color</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="exterior_color" value="{{ carattributes.exterior_color }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="interior_color" class="col-sm-2 col-form-label">Interior Color</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="interior_color" value="{{ carattributes.interior_color }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="accidents_or_damage" class="col-sm-2 col-form-label">Accidents or Damage</label>
+                <div class="col-sm-10">
+                    <input type="checkbox" class="form-check-input" name="accidents_or_damage" {% if carhistory.accidents_or_damage %}checked{% endif %}>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="one_owner" class="col-sm-2 col-form-label">One Owner</label>
+                <div class="col-sm-10">
+                    <input type="checkbox" class="form-check-input" name="one_owner" {% if carhistory.one_owner %}checked{% endif %}>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="personal_use_only" class="col-sm-2 col-form-label">Personal Use Only</label>
+                <div class="col-sm-10">
+                    <input type="checkbox" class="form-check-input" name="personal_use_only" {% if carhistory.personal_use_only %}checked{% endif %}>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="seller_name" class="col-sm-2 col-form-label">Seller Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="seller_name" value="{{ dealer.seller_name }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="seller_rating" class="col-sm-2 col-form-label">Seller Rating</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="seller_rating" value="{{ dealer.seller_rating }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="driver_rating" class="col-sm-2 col-form-label">Driver Rating</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="driver_rating" value="{{ dealer.driver_rating }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="driver_reviews_num" class="col-sm-2 col-form-label">Driver Reviews Number</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="driver_reviews_num" value="{{ dealer.driver_reviews_num }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="price_drop" class="col-sm-2 col-form-label">Price Drop</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="price_drop" value="{{ price.price_drop }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="price" class="col-sm-2 col-form-label">Price</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="price" value="{{ price.price }}">
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
             </div>
         </form>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

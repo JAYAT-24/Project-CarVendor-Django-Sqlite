@@ -1,38 +1,166 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Used Car List</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Add Car</h1>
-        <form action="{% url 'add_car' %}" method="post">
+{% extends "header.html" %}
+
+{% block page_title %}
+Add Car
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Add Car</h1>
+    <form action="{% url 'add_car' %}" method="post">
         {% csrf_token %}
 
-        <input type="text" name="manufacturer" placeholder="Manufacturer">
-        <input type="text" name="model" placeholder="Model">
-        <input type="text" name="year" placeholder="Year">
-        <input type="number" name="mileage" placeholder="Mileage">
-        <input type="text" name="engine" placeholder="Engine">
-        <input type="text" name="transmission" placeholder="Transmission">
-        <input type="text" name="drivetrain" placeholder="Drivetrain">
-        <input type="text" name="fuel_type" placeholder="Fuel Type">
-        <input type="number" name="mpg" placeholder="MPG">
-        <input type="text" name="exterior_color" placeholder="Exterior Color">
-        <input type="text" name="interior_color" placeholder="Interior Color">
-        <input type="checkbox" name="accidents_or_damage" placeholder="Accidents or Damage">
-        <input type="checkbox" name="one_owner" placeholder="One Owner">
-        <input type="checkbox" name="personal_use_only" placeholder="Personal Use Only">
-        <input type="text" name="seller_name" placeholder="Seller Name">
-        <input type="number" name="seller_rating" placeholder="Seller Rating">
-        <input type="text" name="driver_rating" placeholder="Driver Rating">
-        <input type="number" name="driver_reviews_num" placeholder="Driver Reviews Num">
-        <input type="number" name="price_drop" placeholder="Price Drop (optional)">
-        <input type="number" name="price" placeholder="Price">
-        <input type="submit" value="Add">
+        <div class="form-group row">
+            <label for="manufacturer" class="col-sm-2 col-form-label">Manufacturer</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="manufacturer" placeholder="Manufacturer">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="model" class="col-sm-2 col-form-label">Model</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="model" placeholder="Model">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="year" class="col-sm-2 col-form-label">Year</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="year" placeholder="Year">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="mileage" class="col-sm-2 col-form-label">Mileage</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="mileage" placeholder="Mileage">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="engine" class="col-sm-2 col-form-label">Engine</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="engine" placeholder="Engine">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="transmission" class="col-sm-2 col-form-label">Transmission</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="transmission" placeholder="Transmission">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="drivetrain" class="col-sm-2 col-form-label">Drivetrain</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="drivetrain" placeholder="Drivetrain">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="fuel_type" class="col-sm-2 col-form-label">Fuel Type</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="fuel_type" placeholder="Fuel Type">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="mpg" class="col-sm-2 col-form-label">MPG</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="mpg" placeholder="MPG">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="exterior_color" class="col-sm-2 col-form-label">Exterior Color</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="exterior_color" placeholder="Exterior Color">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="interior_color" class="col-sm-2 col-form-label">Interior Color</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="interior_color" placeholder="Interior Color">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Accidents or Damage</label>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="accidents_or_damage">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">One Owner</label>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="one_owner">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Personal Use Only</label>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="personal_use_only">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="seller_name" class="col-sm-2 col-form-label">Seller Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="seller_name" placeholder="Seller Name">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="seller_rating" class="col-sm-2 col-form-label">Seller Rating</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="seller_rating" placeholder="Seller Rating">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="driver_rating" class="col-sm-2 col-form-label">Driver Rating</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="driver_rating" placeholder="Driver Rating">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="driver_reviews_num" class="col-sm-2 col-form-label">Driver Reviews Number</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="driver_reviews_num" placeholder="Driver Reviews Num">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="price_drop" class="col-sm-2 col-form-label">Price Drop (optional)</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="price_drop" placeholder="Price Drop">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="price" class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="price" placeholder="Price">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </div>
     </form>
-    </div>
-</body>
-</html>
+</div>
+{% endblock %}

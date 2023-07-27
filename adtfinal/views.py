@@ -229,8 +229,50 @@ def add_car(request):
     return render(request, 'add_car.html')
 
 
+from django.shortcuts import render, redirect
+import sqlite3
+
 def car_update(request, car_id):
+    conn = sqlite3.connect('Full_Car_Database.db')
+    conn.row_factory = sqlite3.Row
+
+    # Fetch data from the Car table
+    car_cursor = conn.execute('SELECT * FROM Car WHERE car_id=?', (car_id,))
+    car_data = car_cursor.fetchone()
+
+    # Check if the car_id exists in the database
+    if not car_data:
+        return render(request, "error.html", {"error_message": "Car not found"})
+
+    # Fetch data from the CarAttributes table
+    car_attributes_cursor = conn.execute('SELECT * FROM CarAttributes WHERE car_id=?', (car_id,))
+    car_attributes_data = car_attributes_cursor.fetchone()
+
+    # Fetch data from the CarHistory table
+    car_history_cursor = conn.execute('SELECT * FROM CarHistory WHERE car_id=?', (car_id,))
+    car_history_data = car_history_cursor.fetchone()
+
+    # Fetch data from the Dealer table
+    dealer_cursor = conn.execute('SELECT * FROM Dealer WHERE car_id=?', (car_id,))
+    dealer_data = dealer_cursor.fetchone()
+
+    # Fetch data from the Price table
+    price_cursor = conn.execute('SELECT * FROM Price WHERE car_id=?', (car_id,))
+    price_data = price_cursor.fetchone()
+
+    conn.close()
+
+    # Prepare the context with data from all the tables
+    context = {
+        "car": car_data,
+        "carattributes": car_attributes_data,
+        "carhistory": car_history_data,
+        "dealer": dealer_data,
+        "price": price_data,
+    }
+
     if request.method == 'POST':
+        # Get the updated data from the form and update the database
         manufacturer = request.POST.get('manufacturer')
         model = request.POST.get('model')
         year = request.POST.get('year')
@@ -260,13 +302,12 @@ def car_update(request, car_id):
         cursor = conn.execute('UPDATE Price SET price_drop=?, price=? WHERE car_id=?', (price_drop, price, car_id))
 
         conn.commit()
+        conn.close()
+
         return redirect('car_list')
 
-    conn = sqlite3.connect('Full_Car_Database.db')
-    cursor = conn.execute('SELECT * FROM Car WHERE car_id=?', (car_id,))
-    car_data = cursor.fetchone()
+    return render(request, 'car_form.html', context)
 
-    return render(request, 'car_update.html', {'car_data': car_data, 'car_id': car_id})
 
 def generate_graph2():
     conn = sqlite3.connect('Full_Car_Database.db')
