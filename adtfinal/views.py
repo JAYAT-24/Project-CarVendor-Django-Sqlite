@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use("Agg")  # Set the Agg backend
 import matplotlib.pyplot as plt
+import seaborn as sns
 from io import BytesIO
 import base64
 
@@ -346,10 +347,143 @@ def generate_graph3():
 
     return image_data_uri
 
+def generate_graph4():
+    conn = sqlite3.connect('Full_Car_Database.db')
+    cursor = conn.execute('''
+        SELECT Car.year, COUNT(Car.year)
+        FROM Car
+        INNER JOIN CarAttributes
+        ON Car.car_id = CarAttributes.car_id
+        WHERE Car.year > 2000 AND CarAttributes.mpg > 30
+        GROUP BY Car.year;
+        ''')
+
+    colnames = cursor.description #column names
+    colnames_list = []
+    for row in colnames:
+        colnames_list.append(row[0])
+
+    df_man = pd.DataFrame(cursor.fetchall(), columns=colnames_list)
+
+    df_man['Year_Group'] = df_man['year'].apply(lambda x: str((x // 5) * 5 + 1) + '-' + str((x // 5) * 5 + 5))  # Grouping every five years, e.g., 2001-2005
+
+    # Plotting the boxplot
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(data=df_man, x='Year_Group', y='COUNT(Car.year)')
+    plt.xlabel('Year Group')
+    plt.ylabel('Count of Cars')
+    plt.tight_layout()
+    
+
+    # Save the plot to a BytesIO buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+
+    # Encode the image as base64 and convert it to a data URI
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    image_data_uri = f"data:image/png;base64,{image_base64}"
+
+    conn.close()
+
+    return image_data_uri
+
+def generate_graph5():
+    conn = sqlite3.connect('Full_Car_Database.db')
+    cursor = conn.execute('''
+        Select Car.manufacturer, COUNT(Car.manufacturer)
+        FROM Car
+        GROUP BY Car.manufacturer;
+        ''')
+
+    colnames = cursor.description #column names
+    colnames_list = []
+    for row in colnames:
+        colnames_list.append(row[0])
+
+    df_man = pd.DataFrame(cursor.fetchall(), columns=colnames_list)
+
+    df_man['Percentage'] = df_man['COUNT(Car.manufacturer)'] / df_man['COUNT(Car.manufacturer)'].sum() * 100
+
+    # Group manufacturers with less than 4% into "Others"
+    df_man.loc[df_man['Percentage'] < 4, 'manufacturer'] = 'Others'
+    df_man = df_man.groupby('manufacturer').sum()
+
+    # Creating a pie chart
+    plt.figure(figsize=(8, 8))
+    plt.pie(df_man['COUNT(Car.manufacturer)'], labels=df_man.index, autopct='%1.1f%%', startangle=90)
+    plt.axis('equal')
+
+    # Save the plot to a BytesIO buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+
+    # Encode the image as base64 and convert it to a data URI
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    image_data_uri = f"data:image/png;base64,{image_base64}"
+
+    conn.close()
+
+    return image_data_uri
+
+def generate_graph6():
+    conn = sqlite3.connect('Full_Car_Database.db')
+    cursor = conn.execute('''
+    Select Car.manufacturer, CarAttributes.fuel_type, COUNT(CarAttributes.fuel_type)
+    FROM Car
+    INNER JOIN CarAttributes
+    ON Car.car_id = CarAttributes.car_id
+    GROUP BY Car.manufacturer, CarAttributes.fuel_type;
+        ''')
+
+    colnames = cursor.description #column names
+    colnames_list = []
+    for row in colnames:
+        colnames_list.append(row[0])
+
+    df_man = pd.DataFrame(cursor.fetchall(), columns=colnames_list)
+
+    # Pivot the data to create a matrix with fuel types as columns, manufacturers as rows, and counts as values
+    heatmap_data = df_man.pivot(index='manufacturer', columns='fuel_type', values='COUNT(CarAttributes.fuel_type)').fillna(0)
+
+    # Create the heatmap
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(heatmap_data, annot=True, fmt=".0f", cmap='YlGnBu')
+
+    # Add labels and a title
+    plt.xlabel('Fuel Type')
+    plt.ylabel('Manufacturer')
+
+    # Rotate the y-axis labels for better visibility
+    plt.yticks(rotation=0)
+
+    # Show the plot
+    plt.tight_layout()
+    
+    # Save the plot to a BytesIO buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+
+    # Encode the image as base64 and convert it to a data URI
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    image_data_uri = f"data:image/png;base64,{image_base64}"
+
+    conn.close()
+
+    return image_data_uri
+
 def image_page(request):
     graph1 = generate_graph1()
     graph2 = generate_graph2()
     graph3 = generate_graph3()
+    graph4 = generate_graph4()
+    graph5 = generate_graph5()
+    graph6 = generate_graph6()
 
-    context = {"graph1": graph1, "graph2": graph2, "graph3": graph3}
+    context = {"graph1": graph1, "graph2": graph2, "graph3": graph3, "graph4": graph4, "graph5": graph5, "graph6": graph6}
     return render(request, "image_page.html", context)

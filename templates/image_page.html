@@ -6,7 +6,7 @@ Image Page
 
 {% block content %}
     <div class="container mt-5">
-        <h1 class="mb-4 text-center">Image Page</h1>
+        <h1 class="mb-4 text-center">Visualizations and Analysis</h1>
 
 
         <!-- Display the line graph -->
@@ -16,7 +16,7 @@ Image Page
             </div>
             <div class="card-body text-center">
                 <img src="{{ graph1 }}" alt="Line Graph" class="img-fluid">
-                <p>Results: This line plot displays the average car price by year the car was built. There is a spike in 2019 in car value. In addition, there was a steady increase in car value from 2010 to 2023. </p>
+                <p>Figure 1. Line Plot of Average Price and Age of Car. This line plot displays the average car price by year the car was built. There is a spike in 2019 in car value. In addition, there was a steady increase in car value from 2010 to 2023. </p>
             </div>
         </div>
 
@@ -27,7 +27,7 @@ Image Page
             </div>
             <div class="card-body text-center">
                 <img src="{{ graph2 }}" alt="Bar Graph" class="img-fluid">
-                <p>Results: This bar graph displays the average car price by manufacturer. The 10 manufacturers with the highest priced vehicles are Porsche, Land Rover, Jaguar, BMW, Lincoln, RAM, GMC, Infinity, Mercedes-Benz, and Jeep. The highest price manufacturer was Porche with average prices over $130,000. The second most expensive manufacturer was Land Rover with average car prices around $80,000. </p>
+                <p>Figure 2. Bar Graph of Top 10 Most Expensive Manufacturers. This bar graph displays the average car price by manufacturer. The 10 manufacturers with the highest priced vehicles are Porsche, Land Rover, Jaguar, BMW, Lincoln, RAM, GMC, Infinity, Mercedes-Benz, and Jeep. The highest price manufacturer was Porche with average prices over $130,000. The second most expensive manufacturer was Land Rover with average car prices around $80,000. </p>
             </div>
         </div>
 
@@ -38,9 +38,43 @@ Image Page
             </div>
             <div class="card-body text-center">
                 <img src="{{ graph3 }}" alt="Bar Graph" class="img-fluid">
-                <p>Results: This bar graph displays the average mileage by each manufacturer. Chrysler had cars with the highest average mileages with an average mileage of over 70,000 miles. Toyota cars had the second highest mileage with over 60,0000 miles. </p>
+                <p>Figure 3. Bar Graph of Average Mileage by Manufacturer. This bar graph displays the average mileage by each manufacturer. Chrysler had cars with the highest average mileages with an average mileage of over 70,000 miles. Toyota cars had the second highest mileage with over 60,0000 miles. </p>
             </div>
         </div>
+
+        <!-- Display the box plot -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Year-Wise Count of Cars with MPG Greater than 20 (After 2000)</h2>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ graph4 }}" alt="Box Plot" class="img-fluid">
+                <p>Figure 4. Box Plot of the Count of Cars by Year. This box plot displays the year-wise count of cars with MPG over 30 and after the year 2000. The 2021 to 2025 bin have the highest average count of cars with approximately 4000 cars. The years 2001 to 2005 and 2006 to 2010 had the lowest average count of cars. </p>
+            </div>
+        </div>
+
+        <!-- Display the pie chart -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h2 class="mb-0">Count of Cars by Manufacturer</h2>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ graph5 }}" alt="Pie Chart" class="img-fluid">
+                <p>Figure 5. Pie Chart of the Count of Cars by Manufacturer. The other group of cars had the highest count of cars with 44.4%. Ford had the second highest number of cars with 8.4% and Toyota had the third highest number of cars wtih 8.0% </p>
+            </div>
+        </div>
+
+        <!-- Display the second heatmap -->
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h2 class="mb-0">Count of Cars with Different Fuel Types by Manufacturer</h2>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ graph6 }}" alt="Heatmap" class="img-fluid">
+                <p>Figure 6. Heatmap of the Count of Cars with Different Fuel Types by Manufacturer. Gasoline was the most common fuel type overall with the highest counts of cars for Ford and Toyota. Diesel, Hybrid, and E85 Flex Fuel were three other common fuel types.  </p>
+            </div>
+        </div>
+
     </div>
 {% endblock %}
 
