@@ -26,6 +26,8 @@ urlpatterns = [
     path('car_confirm_delete/<int:car_id>/', views.car_confirm_delete, name='car_confirm_delete'),
     path('about/', views.about_view, name='about'),
     path('image_page/', views.image_page, name='image_page'),  # URL for the new page with the line graph
+    path('car_update/<int:car_id>/', views.car_update, name='car_update'),
+    path('add_car/', views.add_car, name='add_car')
     # path('about/', views.about, name='about')
     # ... other URL patterns ...
 ]

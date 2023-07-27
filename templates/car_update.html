@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Car</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Update Car</h1>
+        <form action="{% url 'car_update' car_id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="manufacturer">Manufacturer:</label>
+                <input type="text" name="manufacturer" class="form-control" placeholder="Manufacturer" value="{{ car_data.1 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <input type="text" name="model" class="form-control" placeholder="Model" value="{{ car_data.2 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="year">Year:</label>
+                <input type="text" name="year" class="form-control" placeholder="Year" value="{{ car_data.3 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="mileage">Mileage:</label>
+                <input type="number" name="mileage" class="form-control" placeholder="Mileage" value="{{ car_data.4 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="engine">Engine:</label>
+                <input type="text" name="engine" class="form-control" placeholder="Engine" value="{{ car_data.5 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="transmission">Transmission:</label>
+                <input type="text" name="transmission" class="form-control" placeholder="Transmission" value="{{ car_data.6 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="drivetrain">Drivetrain:</label>
+                <input type="text" name="drivetrain" class="form-control" placeholder="Drivetrain" value="{{ car_data.7 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="fuel_type">Fuel Type:</label>
+                <input type="text" name="fuel_type" class="form-control" placeholder="Fuel Type" value="{{ car_data.8 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="mpg">MPG:</label>
+                <input type="number" name="mpg" class="form-control" placeholder="MPG" value="{{ car_data.9 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="exterior_color">Exterior Color:</label>
+                <input type="text" name="exterior_color" class="form-control" placeholder="Exterior Color" value="{{ car_data.10 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="interior_color">Interior Color:</label>
+                <input type="text" name="interior_color" class="form-control" placeholder="Interior Color" value="{{ car_data.11 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="accidents_or_damage">Accidents or Damage:</label>
+                <input type="checkbox" name="accidents_or_damage" class="form-control" {% if car_data.12 %}checked{% endif %}>
+            </div>
+            <div class="form-group">
+                <label for="one_owner">One Owner:</label>
+                <input type="checkbox" name="one_owner" class="form-control" {% if car_data.13 %}checked{% endif %}>
+            </div>
+            <div class="form-group">
+                <label for="personal_use_only">Personal Use Only:</label>
+                <input type="checkbox" name="personal_use_only" class="form-control" {% if car_data.14 %}checked{% endif %}>
+            </div>
+            <div class="form-group">
+                <label for="seller_name">Seller Name:</label>
+                <input type="text" name="seller_name" class="form-control" placeholder="Seller Name" value="{{ car_data.15 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="seller_rating">Seller Rating:</label>
+                <input type="number" name="seller_rating" class="form-control" placeholder="Seller Rating" value="{{ car_data.16 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="driver_rating">Driver Rating:</label>
+                <input type="text" name="driver_rating" class="form-control" placeholder="Driver Rating" value="{{ car_data.17 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="driver_reviews_num">Driver Reviews Num:</label>
+                <input type="number" name="driver_reviews_num" class="form-control" placeholder="Driver Reviews Num" value="{{ car_data.18 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="price_drop">Price Drop (optional):</label>
+                <input type="number" name="price_drop" class="form-control" placeholder="Price Drop (optional)" value="{{ car_data.19 }}">
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" name="price" class="form-control" placeholder="Price" value="{{ car_data.20 }}" required>
+            </div>
+            <input type="submit" value="Update" class="btn btn-primary">
+        </form>
+    </div>
+</body>
+</html>
+

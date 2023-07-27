@@ -153,6 +153,8 @@ def car_detail_by_id(request, car_id):
 
     return render(request, "car_detail.html", context)
 
+
+
 def generate_graph1():
     conn = sqlite3.connect('Full_Car_Database.db')
     cursor = conn.execute('''
@@ -190,7 +192,81 @@ def generate_graph1():
     conn.close()
 
     return image_data_uri
+    
+def add_car(request):
+    if request.method == 'POST':
+        manufacturer = request.POST.get('manufacturer')
+        model = request.POST.get('model')
+        year = request.POST.get('year')
+        mileage = request.POST.get('mileage')
+        engine = request.POST.get('engine')
+        transmission = request.POST.get('transmission')
+        drivetrain = request.POST.get('drivetrain')
+        fuel_type = request.POST.get('fuel_type')
+        mpg = request.POST.get('mpg')
+        exterior_color = request.POST.get('exterior_color')
+        interior_color = request.POST.get('interior_color')
+        accidents_or_damage = request.POST.get('accidents_or_damage')
+        one_owner = request.POST.get('one_owner')
+        personal_use_only = request.POST.get('personal_use_only')
+        seller_name = request.POST.get('seller_name')
+        seller_rating = request.POST.get('seller_rating')
+        driver_rating = request.POST.get('driver_rating')
+        driver_reviews_num = request.POST.get('driver_reviews_num')
+        price_drop = request.POST.get('price_drop')
+        price = request.POST.get('price')
 
+        conn = sqlite3.connect('Full_Car_Database.db')
+        cursor = conn.execute('INSERT INTO Car (manufacturer, model, year) VALUES (?, ?, ?)', (manufacturer, model, year))
+        cursor = conn.execute('INSERT INTO Carattributes (mileage, engine, transmission, drivetrain, fuel_type, mpg, exterior_color, interior_color) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (mileage, engine, transmission, drivetrain, fuel_type, mpg, exterior_color, interior_color))
+        cursor = conn.execute('INSERT INTO Carhistory (accidents_or_damage, one_owner, personal_use_only) VALUES (?, ?, ?)', (accidents_or_damage, one_owner, personal_use_only))
+        cursor = conn.execute('INSERT INTO Dealer (seller_name, seller_rating, driver_rating, driver_reviews_num) VALUES (?, ?, ?, ?)', (seller_name, seller_rating, driver_rating, driver_reviews_num))
+        cursor = conn.execute('INSERT INTO Price (price_drop, price) VALUES (?, ?)', (price_drop, price))
+        conn.commit()
+
+        return redirect('car_list')
+
+    return render(request, 'add_car.html')
+
+
+def car_update(request, car_id):
+    if request.method == 'POST':
+        manufacturer = request.POST.get('manufacturer')
+        model = request.POST.get('model')
+        year = request.POST.get('year')
+        mileage = request.POST.get('mileage')
+        engine = request.POST.get('engine')
+        transmission = request.POST.get('transmission')
+        drivetrain = request.POST.get('drivetrain')
+        fuel_type = request.POST.get('fuel_type')
+        mpg = request.POST.get('mpg')
+        exterior_color = request.POST.get('exterior_color')
+        interior_color = request.POST.get('interior_color')
+        accidents_or_damage = request.POST.get('accidents_or_damage')
+        one_owner = request.POST.get('one_owner')
+        personal_use_only = request.POST.get('personal_use_only')
+        seller_name = request.POST.get('seller_name')
+        seller_rating = request.POST.get('seller_rating')
+        driver_rating = request.POST.get('driver_rating')
+        driver_reviews_num = request.POST.get('driver_reviews_num')
+        price_drop = request.POST.get('price_drop')
+        price = request.POST.get('price')
+
+        conn = sqlite3.connect('Full_Car_Database.db')
+        cursor = conn.execute('UPDATE Car SET manufacturer=?, model=?, year=? WHERE car_id=?', (manufacturer, model, year, car_id))
+        cursor = conn.execute('UPDATE CarAttributes SET mileage=?, engine=?, transmission=?, drivetrain=?, fuel_type=?, mpg=?, exterior_color=?, interior_color=? WHERE car_id=?', (mileage, engine, transmission, drivetrain, fuel_type, mpg, exterior_color, interior_color, car_id))
+        cursor = conn.execute('UPDATE CarHistory SET accidents_or_damage=?, one_owner=?, personal_use_only=? WHERE car_id=?', (accidents_or_damage, one_owner, personal_use_only, car_id))
+        cursor = conn.execute('UPDATE Dealer SET seller_name=?, seller_rating=?, driver_rating=?, driver_reviews_num=? WHERE car_id=?', (seller_name, seller_rating, driver_rating, driver_reviews_num, car_id))
+        cursor = conn.execute('UPDATE Price SET price_drop=?, price=? WHERE car_id=?', (price_drop, price, car_id))
+
+        conn.commit()
+        return redirect('car_list')
+
+    conn = sqlite3.connect('Full_Car_Database.db')
+    cursor = conn.execute('SELECT * FROM Car WHERE car_id=?', (car_id,))
+    car_data = cursor.fetchone()
+
+    return render(request, 'car_update.html', {'car_data': car_data, 'car_id': car_id})
 
 def generate_graph2():
     conn = sqlite3.connect('Full_Car_Database.db')

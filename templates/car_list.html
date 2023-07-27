@@ -7,6 +7,7 @@ Car List
 {% block content %}
     <div class="container mt-5">
         <h1 class="mb-4">Used Car List</h1>
+        <a href="{% url 'add_car' %}" class="btn btn-primary">Add Car</a>
         <form method="GET">
             <div class="form-group">
                 <label for="manufacturer">Filter by Manufacturer:</label>
@@ -54,7 +55,7 @@ Car List
                     <td>
                         <a href="{% url 'car_detail' car.0 %}" class="btn btn-info">Detail</a>
                         <a href="{% url 'car_confirm_delete' car.0 %}" class="btn btn-danger">Delete</a>
-                        <a href="car_edit" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'car_update' car.0 %}" class="btn btn-warning">Update</a>
                     </td>
                 </tr>
                 {% empty %}

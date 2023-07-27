@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Used Car List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Add Car</h1>
+        <form action="{% url 'add_car' %}" method="post">
+        {% csrf_token %}
+
+        <input type="text" name="manufacturer" placeholder="Manufacturer">
+        <input type="text" name="model" placeholder="Model">
+        <input type="text" name="year" placeholder="Year">
+        <input type="number" name="mileage" placeholder="Mileage">
+        <input type="text" name="engine" placeholder="Engine">
+        <input type="text" name="transmission" placeholder="Transmission">
+        <input type="text" name="drivetrain" placeholder="Drivetrain">
+        <input type="text" name="fuel_type" placeholder="Fuel Type">
+        <input type="number" name="mpg" placeholder="MPG">
+        <input type="text" name="exterior_color" placeholder="Exterior Color">
+        <input type="text" name="interior_color" placeholder="Interior Color">
+        <input type="checkbox" name="accidents_or_damage" placeholder="Accidents or Damage">
+        <input type="checkbox" name="one_owner" placeholder="One Owner">
+        <input type="checkbox" name="personal_use_only" placeholder="Personal Use Only">
+        <input type="text" name="seller_name" placeholder="Seller Name">
+        <input type="number" name="seller_rating" placeholder="Seller Rating">
+        <input type="text" name="driver_rating" placeholder="Driver Rating">
+        <input type="number" name="driver_reviews_num" placeholder="Driver Reviews Num">
+        <input type="number" name="price_drop" placeholder="Price Drop (optional)">
+        <input type="number" name="price" placeholder="Price">
+        <input type="submit" value="Add">
+    </form>
+    </div>
+</body>
+</html>
