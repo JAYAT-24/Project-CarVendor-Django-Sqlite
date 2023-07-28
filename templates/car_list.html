@@ -8,62 +8,98 @@ Car List
     <div class="container mt-5">
         <h1 class="mb-4">Used Car List</h1>
         <a href="{% url 'add_car' %}" class="btn btn-primary">Add Car</a>
-        <form method="GET">
-            <div class="form-group">
-                <label for="manufacturer">Filter by Manufacturer:</label>
-                <select class="form-control" name="manufacturer" id="manufacturer">
-                    <option value="">All</option>
-                    {% for manufacturer in manufacturers %}
-                        <option value="{{ manufacturer }}" {% if selected_manufacturer == manufacturer %}selected{% endif %}>{{ manufacturer }}</option>
-                    {% endfor %}
-                </select>
+        <div class="card mt-3">
+            <div class="card-body">
+                <form method="GET">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="manufacturer">Filter by Manufacturer:</label>
+                                <select class="form-control" name="manufacturer" id="manufacturer">
+                                    <option value="">All</option>
+                                    {% for manufacturer in manufacturers %}
+                                        <option value="{{ manufacturer }}" {% if selected_manufacturer == manufacturer %}selected{% endif %}>{{ manufacturer }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="sort_by">Sort By:</label>
+                                <select class="form-control" name="sort_by" id="sort_by">
+                                    <option value="">--Select--</option>
+                                    <option value="year" {% if sort_by == 'year' %}selected{% endif %}>Year</option>
+                                    <option value="manufacturer" {% if sort_by == 'manufacturer' %}selected{% endif %}>Manufacturer</option>
+                                    <option value="price" {% if sort_by == 'price' %}selected{% endif %}>Price</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="sort_order">Sort Order:</label>
+                                <select class="form-control" name="sort_order" id="sort_order">
+                                    <option value="">--Select--</option>
+                                    <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+                                    <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="year">Filter by Year:</label>
-                <input type="range" class="form-control-range" id="year" name="year" min="1998" max="2020" step="1" value="{{ selected_year }}">
-                <span>Selected Year Range: <span id="startYear">{{ selected_year }}</span> - <span id="endYear">2020</span></span>
-            </div>
-            {% if models %}
-            <div class="form-group">
-                <label for="model">Filter by Model:</label>
-                <select class="form-control" name="model" id="model">
-                    <option value="">All</option>
-                    {% for model in models %}
-                        <option value="{{ model }}" {% if selected_model == model %}selected{% endif %}>{{ model }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            {% endif %}
-            <button type="submit" class="btn btn-primary">Filter</button>
-        </form>
+        </div>
+
         <br>
+
         <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Manufacturer</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for car in car_data %}
-                <tr>
-                    <td>{{ car.1 }}</td>
-                    <td>{{ car.2 }}</td>
-                    <td>{{ car.3 }}</td>
-                    <td>
-                        <a href="{% url 'car_detail' car.0 %}" class="btn btn-info">Detail</a>
-                        <a href="{% url 'car_confirm_delete' car.0 %}" class="btn btn-danger">Delete</a>
-                        <a href="{% url 'car_update' car.0 %}" class="btn btn-warning">Update</a>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4"><b> Please, add select a filter.</b></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <thead class="thead-dark">
+        <tr>
+            <th>Manufacturer</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for car in car_data %}
+        <tr>
+            <td>{{ car.1 }}</td>
+            <td>{{ car.2 }}</td>
+            <td>{{ car.3 }}</td>
+            <td>{% if car.4 %}${{ car.4 }}{% else %}N/A{% endif %}</td>
+            <td>
+                <a href="{% url 'car_detail' car.0 %}" class="btn btn-info">Detail</a>
+                <a href="{% url 'car_confirm_delete' car.0 %}" class="btn btn-danger">Delete</a>
+                <a href="{% url 'car_update' car.0 %}" class="btn btn-warning">Update</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5"><b>No cars match the selected filters.</b></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+        <!-- Pagination links -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if car_data.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ car_data.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ car_data.number }} of {{ car_data.paginator.num_pages }}.
+                </span>
+
+                {% if car_data.has_next %}
+                    <a href="?page={{ car_data.next_page_number }}">next</a>
+                    <a href="?page={{ car_data.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
     </div>
 {% endblock %}

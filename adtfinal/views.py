@@ -7,6 +7,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from io import BytesIO
 import base64
+from django.db import connection
+from django.core.paginator import Paginator
+
+
 
 def index(request):
     return render(request, "home.html")
@@ -15,48 +19,55 @@ def about_view(request):
     # Add any logic or data retrieval you need for the about page here
     return render(request, 'about.html')
 
+def home(request):
+    return render(request, "home.html")
+
+import sqlite3
+from django.core.paginator import Paginator
+from django.shortcuts import render
+
 def car_list(request):
     conn = sqlite3.connect('Full_Car_Database.db')
-    cursor = conn.execute('SELECT * FROM Car ORDER BY RANDOM() LIMIT 1000')
+    cursor = conn.execute('SELECT c.car_id, c.manufacturer, c.model, c.year, p.price FROM Car c JOIN Price p ON c.car_id = p.car_id')
     car_data = [row for row in cursor]
-
-    # Get the manufacturers and models lists
+    # Get the manufacturers list
     manufacturers = sorted(list(set(row[1] for row in car_data)))
     selected_manufacturer = request.GET.get('manufacturer', '')
-
-    if selected_manufacturer:
-        models = sorted(list(set(row[2] for row in car_data if row[1] == selected_manufacturer)))
-    else:
-        models = []
-
-    # Get the selected filters from GET parameters
-    selected_year = request.GET.get('year', '')
-    selected_model = request.GET.get('model', '')
 
     # If manufacturer is selected, filter data
     filtered_data = car_data
     if selected_manufacturer:
         filtered_data = [row for row in car_data if row[1] == selected_manufacturer]
 
-    # If year is selected, filter data
-    if selected_year:
-        filtered_data = [row for row in filtered_data if str(row[3]) == selected_year]
+    # Get the selected sorting options from GET parameters
+    sort_by = request.GET.get('sort_by', '')
+    sort_order = request.GET.get('sort_order', '')
 
-    # If model is selected, filter data
-    if selected_model:
-        filtered_data = [row for row in filtered_data if row[2] == selected_model]
+    # Sorting data
+    if sort_by and sort_order:
+        if sort_by == 'year':
+            filtered_data = sorted(filtered_data, key=lambda x: x[3], reverse=(sort_order == 'desc'))
+        elif sort_by == 'manufacturer':
+            filtered_data = sorted(filtered_data, key=lambda x: x[1], reverse=(sort_order == 'desc'))
+        elif sort_by == 'price':
+            filtered_data = sorted(filtered_data, key=lambda x: x[4] if x[4] else 0, reverse=(sort_order == 'desc'))
 
     conn.close()
 
+    paginator = Paginator(filtered_data, 50)  # Show 50 cars per page
+
+    page_number = request.GET.get('page')
+    car_data = paginator.get_page(page_number)
+
     context = {
-        "car_data": filtered_data,
+        "car_data": car_data,
         "manufacturers": manufacturers,
         "selected_manufacturer": selected_manufacturer,
-        "models": models,
-        "selected_year": selected_year,
-        "selected_model": selected_model,
+        "sort_by": sort_by,
+        "sort_order": sort_order,
     }
     return render(request, "car_list.html", context)
+
 
 
 def car_confirm_delete(request, car_id):
@@ -92,9 +103,6 @@ def car_confirm_delete(request, car_id):
     }
 
     return render(request, "car_confirm_delete.html", context)
-
-def home(request):
-    return render(request, "home.html")
 
 def car_detail_by_id(request, car_id):
     conn = sqlite3.connect('Full_Car_Database.db')
@@ -140,7 +148,7 @@ def car_detail_by_id(request, car_id):
             "mpg": car_attributes_data[6],
             "exterior_color": car_attributes_data[7],
             "interior_color": car_attributes_data[8],
-            "accidents_or_damage" : bool(int.from_bytes(car_history_data[1], byteorder='big')),
+            "accidents_or_damage": bool(int.from_bytes(car_history_data[1], byteorder='big')),
             "one_owner" : bool(int.from_bytes(car_history_data[2], byteorder='big')),
             "personal_use_only" : bool(int.from_bytes(car_history_data[3], byteorder='big')),
             "seller_name": dealer_data[1],
@@ -154,46 +162,14 @@ def car_detail_by_id(request, car_id):
 
     return render(request, "car_detail.html", context)
 
+import sqlite3
+from django.shortcuts import render, redirect
 
+# ... (other view functions you might have) ...
 
-def generate_graph1():
-    conn = sqlite3.connect('Full_Car_Database.db')
-    cursor = conn.execute('''
-        SELECT Car.year, COUNT(Car.year), AVG(Price.price)
-        FROM Car
-        INNER JOIN Price 
-        ON Car.car_id = Price.car_id
-        WHERE Car.year >= 2000
-        GROUP BY Car.year;
-        ''')
+from django.db import transaction
 
-    colnames = cursor.description #column names
-    colnames_list = []
-    for row in colnames:
-        colnames_list.append(row[0])
-    df_yr = pd.DataFrame(cursor.fetchall(), columns=colnames_list)
-
-    #Plot the results
-    import matplotlib.pyplot as plt
-    plt.plot(df_yr['year'], df_yr['AVG(Price.price)'])
-    plt.xlabel('Age of Car (Year Built)')
-    plt.ylabel('Average Price')
-    
-
-    # Save the plot to a BytesIO buffer
-    buffer = BytesIO()
-    plt.savefig(buffer, format='png')
-    plt.close()
-
-    # Encode the image as base64 and convert it to a data URI
-    buffer.seek(0)
-    image_base64 = base64.b64encode(buffer.getvalue()).decode()
-    image_data_uri = f"data:image/png;base64,{image_base64}"
-
-    conn.close()
-
-    return image_data_uri
-    
+@transaction.atomic
 def add_car(request):
     if request.method == 'POST':
         manufacturer = request.POST.get('manufacturer')
@@ -207,9 +183,9 @@ def add_car(request):
         mpg = request.POST.get('mpg')
         exterior_color = request.POST.get('exterior_color')
         interior_color = request.POST.get('interior_color')
-        accidents_or_damage = request.POST.get('accidents_or_damage')
-        one_owner = request.POST.get('one_owner')
-        personal_use_only = request.POST.get('personal_use_only')
+        accidents_or_damage = request.POST.get('accidents_or_damage') == 'on'
+        one_owner = request.POST.get('one_owner') == 'on'
+        personal_use_only = request.POST.get('personal_use_only') == 'on'
         seller_name = request.POST.get('seller_name')
         seller_rating = request.POST.get('seller_rating')
         driver_rating = request.POST.get('driver_rating')
@@ -217,21 +193,32 @@ def add_car(request):
         price_drop = request.POST.get('price_drop')
         price = request.POST.get('price')
 
+        # Convert checkboxes to Python boolean values
+        accidents_or_damage = accidents_or_damage == 'on'
+        print(accidents_or_damage)
+        one_owner = one_owner == 'on'
+        print(one_owner)
+        personal_use_only = personal_use_only == 'on'
+        print(personal_use_only)
         conn = sqlite3.connect('Full_Car_Database.db')
         cursor = conn.execute('INSERT INTO Car (manufacturer, model, year) VALUES (?, ?, ?)', (manufacturer, model, year))
-        cursor = conn.execute('INSERT INTO Carattributes (mileage, engine, transmission, drivetrain, fuel_type, mpg, exterior_color, interior_color) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (mileage, engine, transmission, drivetrain, fuel_type, mpg, exterior_color, interior_color))
-        cursor = conn.execute('INSERT INTO Carhistory (accidents_or_damage, one_owner, personal_use_only) VALUES (?, ?, ?)', (accidents_or_damage, one_owner, personal_use_only))
-        cursor = conn.execute('INSERT INTO Dealer (seller_name, seller_rating, driver_rating, driver_reviews_num) VALUES (?, ?, ?, ?)', (seller_name, seller_rating, driver_rating, driver_reviews_num))
-        cursor = conn.execute('INSERT INTO Price (price_drop, price) VALUES (?, ?)', (price_drop, price))
+        print(conn.execute("select * from Car where manufacturer = 'j';"))
+        new_car_id = cursor.lastrowid
+
+        cursor = conn.execute('INSERT INTO CarAttributes (mileage, engine, transmission, drivetrain, fuel_type, mpg, exterior_color, interior_color, car_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', (mileage, engine, transmission, drivetrain, fuel_type, mpg, exterior_color, interior_color, new_car_id))
+
+        cursor = conn.execute('INSERT INTO CarHistory (accidents_or_damage, one_owner, personal_use_only, car_id) VALUES (?, ?, ?, ?)', (accidents_or_damage, one_owner, personal_use_only, new_car_id))
+
+        cursor = conn.execute('INSERT INTO Dealer (seller_name, seller_rating, driver_rating, driver_reviews_num, car_id) VALUES (?, ?, ?, ?, ?)', (seller_name, seller_rating, driver_rating, driver_reviews_num, new_car_id))
+
+        cursor = conn.execute('INSERT INTO Price (price_drop, price, car_id) VALUES (?, ?, ?)', (price_drop, price, new_car_id))
+
         conn.commit()
+        conn.close()
 
         return redirect('car_list')
 
     return render(request, 'add_car.html')
-
-
-from django.shortcuts import render, redirect
-import sqlite3
 
 def car_update(request, car_id):
     conn = sqlite3.connect('Full_Car_Database.db')
@@ -285,9 +272,9 @@ def car_update(request, car_id):
         mpg = request.POST.get('mpg')
         exterior_color = request.POST.get('exterior_color')
         interior_color = request.POST.get('interior_color')
-        accidents_or_damage = request.POST.get('accidents_or_damage')
-        one_owner = request.POST.get('one_owner')
-        personal_use_only = request.POST.get('personal_use_only')
+        accidents_or_damage = request.POST.get('accidents_or_damage') == "on"
+        one_owner = request.POST.get('one_owner') == "on"
+        personal_use_only = request.POST.get('personal_use_only') == "on"
         seller_name = request.POST.get('seller_name')
         seller_rating = request.POST.get('seller_rating')
         driver_rating = request.POST.get('driver_rating')
@@ -308,6 +295,43 @@ def car_update(request, car_id):
         return redirect('car_list')
 
     return render(request, 'car_form.html', context)
+
+def generate_graph1():
+    conn = sqlite3.connect('Full_Car_Database.db')
+    cursor = conn.execute('''
+        SELECT Car.year, COUNT(Car.year), AVG(Price.price)
+        FROM Car
+        INNER JOIN Price 
+        ON Car.car_id = Price.car_id
+        WHERE Car.year >= 2000
+        GROUP BY Car.year;
+        ''')
+
+    colnames = cursor.description  # column names
+    colnames_list = []
+    for row in colnames:
+        colnames_list.append(row[0])
+    df_yr = pd.DataFrame(cursor.fetchall(), columns=colnames_list)
+
+    # Plot the results
+    import matplotlib.pyplot as plt
+    plt.plot(df_yr['year'], df_yr['AVG(Price.price)'])
+    plt.xlabel('Age of Car (Year Built)')
+    plt.ylabel('Average Price')
+
+    # Save the plot to a BytesIO buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+
+    # Encode the image as base64 and convert it to a data URI
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    image_data_uri = f"data:image/png;base64,{image_base64}"
+
+    conn.close()
+
+    return image_data_uri
 
 
 def generate_graph2():

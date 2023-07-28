@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>
         CarVendor
     </title>
-    <link rel="icon" type="image/jpg" href="car_logo.jpg">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'car_logo.jpg' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <style>
         body {

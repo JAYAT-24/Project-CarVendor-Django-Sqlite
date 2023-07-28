@@ -4,7 +4,21 @@
 About CarVendor
 {% endblock %}
 
+{% load static %}
+
 {% block content %}
+<style>
+    .team-member-img {
+        width: 200px; /* Adjust this value as needed */
+        height: 200px; /* Adjust this value as needed */
+    }
+    /* Center the text below the images */
+    .team-member-info {
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
+
 <div class="card">
     <div class="card-header bg-primary text-white">
         <h1 class="mb-0">About CarVendor</h1>
@@ -18,4 +32,33 @@ About CarVendor
         <p>Whether you're looking to buy a reliable used car or sell your current vehicle, CarVendor has got you covered.</p>
     </div>
 </div>
+
+<div class="card mt-4">
+    <div class="card-header bg-primary text-white">
+        <h2 class="mb-0">Meet Our Team</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <img src="{% static 'member1_photo.jpg' %}" alt="Team Member 1" class="img-fluid rounded-circle team-member-img">
+                    <h4 class="team-member-info">Jayat Rateria</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <img src="{% static 'member2_photo.jpg' %}" alt="Team Member 2" class="img-fluid rounded-circle team-member-img">
+                    <h4 class="team-member-info">Kelly Craig</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <img src="{% static 'member3_photo.jpg' %}" alt="Team Member 3" class="img-fluid rounded-circle team-member-img">
+                    <h4 class="team-member-info">Thomas Koutsidis</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
